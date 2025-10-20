@@ -7,7 +7,7 @@ const sequelize = new Sequelize (
     dbConfig.PASSWORD,
     {
         host: dbConfig.HOST,
-        port: dbConfig.PORT,
+        port: Number(dbConfig.PORT),
         dialect: dbConfig.DIALECT,
         pool: dbConfig.POOL,
         logging: false, // Disable logging;
