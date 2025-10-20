@@ -28,6 +28,11 @@ const Employee = sequelize.define('Employee', {    //Creates a model (and corres
         type: DataTypes.INTEGER,
         allowNull: false,
     },
+    status:{
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'active',
+    }
 });
 
 //Sequelize automatically adds these 'createdAt, updatedAt' timestamps

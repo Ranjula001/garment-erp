@@ -18,4 +18,7 @@ export const employeeValidationRules = [
     body("salary")
         .notEmpty().withMessage("Salary is required")
         .isInt({min:0}).withMessage("Salary must be a positive integer"),
+    body("status")
+        .notEmpty().withMessage("Status is required")
+        .isIn(["active", "inactive", "On Leave"]).withMessage("Invalid status")
 ];
