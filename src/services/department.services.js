@@ -1,5 +1,4 @@
 import Department from "../models/department.model.js";
-import Employee from "../models/employee.model.js";
 
 //CREATE
 export const createDeptService = async (departmentData) => {
@@ -8,24 +7,12 @@ export const createDeptService = async (departmentData) => {
 
 //READ ALL
 export const getAllDeptsService = async () => {
-    return await Department.findAll({
-        include: [{
-            model: Employee,
-            as: 'employees',
-            attributes: ['id', 'firstName', 'lastName', 'email', 'role']
-        }]
-    });
+    return await Department.findAll();
 };
 
 //READ by ID
 export const getDeptByPkService = async (id) =>{
-    return await Department.findByPk(id, {
-        include: [{
-            model: Employee,
-            as: 'employees',
-            attributes: ['id', 'firstName', 'lastName', 'email', 'role']
-        }]
-    });
+    return await Department.findByPk(id);
 };
 
 //UPDATE

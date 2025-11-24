@@ -11,4 +11,4 @@ router.get("/:id", getEmployeeByPk);
 router.put("/:id", employeeValidationRules, validate, updateEmployee);
 router.delete("/:id", deleteEmployee);
 
-export default router;
+export default router; // Use employee routes
