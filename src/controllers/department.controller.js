@@ -1,4 +1,4 @@
-import { createDeptService, getAllDeptsService, getDeptByPkService, updateDeptService, deleteDeptService } from "../services/department.services";
+import { createDeptService, getAllDeptsService, getDeptByPkService, updateDeptService, deleteDeptService } from "../services/department.services.js";
 
 //CREATE
 export const createDepartment = async (req, res) => {

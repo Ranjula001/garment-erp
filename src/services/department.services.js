@@ -1,4 +1,4 @@
-import Department from "../models/department.model";
+import Department from "../models/department.model.js";
 
 //CREATE
 export const createDeptService = async (departmentData) => {
