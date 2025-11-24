@@ -3,6 +3,7 @@ import morgan from 'morgan'; //for logging
 import cors from 'cors'; // for frontend-backend communication
 import dotenv from 'dotenv';
 import sequelize from "./models/index.js"; // Import the sequelize instance
+import "./models/associations.js"; // Import model associations
 import employeeRoutes from "./routes/employee.routes.js"; // Import employee routes
 import departmentRoutes from "./routes/department.routes.js"; // Import department routes
 import { globalErrorHandler } from './middlewares/errorHandler.js'; // Import error handler

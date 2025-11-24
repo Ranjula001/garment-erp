@@ -15,9 +15,6 @@ const sequelize = new Sequelize (
     },
 );
 
-// Import associations after sequelize is defined
-import './associations.js';
-
 //Test
 sequelize.authenticate()
 .then(() => {
