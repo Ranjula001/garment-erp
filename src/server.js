@@ -3,8 +3,10 @@ import morgan from 'morgan'; //for logging
 import cors from 'cors'; // for frontend-backend communication
 import dotenv from 'dotenv';
 import sequelize from "./models/index.js"; // Import the sequelize instance
+import "./models/associations.js"; // Import model associations
 import employeeRoutes from "./routes/employee.routes.js"; // Import employee routes
 import departmentRoutes from "./routes/department.routes.js"; // Import department routes
+import { globalErrorHandler } from './middlewares/errorHandler.js'; // Import error handler
 
 dotenv.config(); // Load environment variables from .env file
 const PORT = process.env.PORT || 5000;
@@ -20,12 +22,15 @@ app.use(express.urlencoded({ extended: true }));
 
 //Routes
 app.use("/api/employees", employeeRoutes); // Use employee routes
-app.use("/api/departments", departmentRoutes); // Use department routes 
+app.use("/api/departments", departmentRoutes); // Use department routes
 
 // Test route
 app.get('/', (req, res) => {
   res.send('👌 Garment ERP backend is running!');
 });
+
+// Global error handler (MUST be last middleware)
+app.use(globalErrorHandler);
 
 // Start the server on port 4000
 app.listen(PORT, async () => {

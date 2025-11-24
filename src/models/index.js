@@ -15,7 +15,6 @@ const sequelize = new Sequelize (
     },
 );
 
-
 //Test
 sequelize.authenticate()
 .then(() => {

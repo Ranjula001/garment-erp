@@ -20,5 +20,8 @@ export const employeeValidationRules = [
         .isInt({min:0}).withMessage("Salary must be a positive integer"),
     body("status")
         .notEmpty().withMessage("Status is required")
-        .isIn(["active", "inactive", "On Leave"]).withMessage("Invalid status")
+        .isIn(["active", "inactive", "On Leave"]).withMessage("Invalid status"),
+    body("departmentId")
+        .optional()
+        .isInt({min: 1}).withMessage("Department ID must be a positive integer")
 ];
