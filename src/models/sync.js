@@ -1,10 +1,12 @@
 import sequelize from './index.js';
 import Employee from './employee.model.js';
+import Department from './department.model.js';
+import './associations.js'; // Import associations
 
 (async () => {
     try {
-        await sequelize.sync({force: true});  //Sync all models with DB, force:true drops and recreates tables (used only during development)
-        console.log("🐸 All models were synchronized successfully.");
+        await sequelize.sync({alter: true});  //alter: true updates existing tables without dropping data
+        console.log("🐸 All models with relationships synchronized successfully.");
         process.exit(0);  //Exit the process after successful sync
     }
     catch (error) {

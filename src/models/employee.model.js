@@ -32,6 +32,14 @@ const Employee = sequelize.define('Employee', {    //Creates a model (and corres
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: 'active',
+    },
+    departmentId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: 'Departments',
+            key: 'id'
+        }
     }
 });
 
