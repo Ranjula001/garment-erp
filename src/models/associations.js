@@ -1,5 +1,6 @@
 import Employee from './employee.model.js';
 import Department from './department.model.js';
+import User from './user.model.js';
 
 // Define associations
 Employee.belongsTo(Department, { 
@@ -12,4 +13,4 @@ Department.hasMany(Employee, {
     as: 'employees'
 });
 
-export { Employee, Department };
+export { Employee, Department, User };

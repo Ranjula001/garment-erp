@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import { getUserByIdService } from '../services/auth.services.js';
 import { UnauthorizedError } from '../utils/customErrors.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
+import { hasPermission, hasAnyPermission, ROLES } from '../utils/rolePermissions.js';
 
 // Verify JWT token and authenticate user
 export const authenticate = asyncHandler(async (req, res, next) => {
@@ -31,7 +32,7 @@ export const authenticate = asyncHandler(async (req, res, next) => {
     next();
 });
 
-// Authorize based on user roles
+// Authorize based on user roles (legacy)
 export const authorize = (...roles) => {
     return (req, res, next) => {
         if (!req.user){
@@ -43,4 +44,43 @@ export const authorize = (...roles) => {
 
         next();
     };
-}
+};
+
+// Authorize by permissions (new system)
+export const requirePermission = (...permissions) => {
+    return (req, res, next) => {
+        if (!req.user) {
+            throw new UnauthorizedError('Authentication required');
+        }
+
+        if (!hasAnyPermission(req.user.role, permissions)) {
+            throw new UnauthorizedError('Insufficient permissions for this operation');
+        }
+
+        next();
+    };
+};
+
+// Super admin only
+export const requireSuperAdmin = (req, res, next) => {
+    if (!req.user || req.user.role !== ROLES.SUPER_ADMIN) {
+        throw new UnauthorizedError('Super admin access required');
+    }
+    next();
+};
+
+// Admin or Super Admin
+export const requireAdmin = (req, res, next) => {
+    if (!req.user || ![ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(req.user.role)) {
+        throw new UnauthorizedError('Admin access required');
+    }
+    next();
+};
+
+// Manager level or above
+export const requireManager = (req, res, next) => {
+    if (!req.user || ![ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.MANAGER].includes(req.user.role)) {
+        throw new UnauthorizedError('Manager access or above required');
+    }
+    next();
+};

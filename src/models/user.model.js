@@ -1,7 +1,6 @@
-import { DataTypes } from "sequelize";
-import sequelize from "../config/database.js";
-import bcrypt from "bcryptjs";
-import { use } from "react";
+import { DataTypes } from 'sequelize';
+import sequelize from './index.js';
+import bcrypt from 'bcrypt';
 
 const User = sequelize.define("User", {
     id: {
@@ -33,9 +32,9 @@ const User = sequelize.define("User", {
         },
     },
     role: {
-        type: DataTypes.ENUM('super-admin','admin', 'user', 'manager'),
+        type: DataTypes.ENUM('super-admin', 'admin', 'manager', 'employee'),
         allowNull: false,
-        defaultValue: 'user',
+        defaultValue: 'employee',
     },
     status: {
         type: DataTypes.ENUM('active', 'inactive'),

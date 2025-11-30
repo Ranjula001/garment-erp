@@ -18,7 +18,7 @@ export const registerValidationRules = [
     
     body('role')
         .optional()
-        .isIn(['admin', 'manager', 'employee']).withMessage('Invalid role')
+        .isIn(['super-admin', 'admin', 'manager', 'employee']).withMessage('Invalid role')
 ];
 
 export const loginValidationRules = [

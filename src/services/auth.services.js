@@ -1,6 +1,7 @@
 import User from '../models/user.model.js';
 import jwt from 'jsonwebtoken';
-import { ConflictError, ValidationError, UnauthorizedError } from '../utils/customErrors.js';
+import { ConflictError, ValidationError, UnauthorizedError, NotFoundError } from '../utils/customErrors.js';
+import { Op } from 'sequelize';
 
 // Generate JWT token
 const generateToken = (userId) => {
@@ -16,7 +17,10 @@ export const registerUserService = async (userData) => {
     // Check if user already exists
     const existingUser = await User.findOne({
         where: {
-            $or: [{ email }, { username }]
+            [Op.or]: [
+                { email: email },
+                { username: username }
+            ]
         }
     });
 

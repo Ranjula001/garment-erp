@@ -6,6 +6,7 @@ import sequelize from "./models/index.js"; // Import the sequelize instance
 import "./models/associations.js"; // Import model associations
 import employeeRoutes from "./routes/employee.routes.js"; // Import employee routes
 import departmentRoutes from "./routes/department.routes.js"; // Import department routes
+import authRoutes from "./routes/auth.routes.js"; // Import auth routes
 import { globalErrorHandler } from './middlewares/errorHandler.js'; // Import error handler
 
 dotenv.config(); // Load environment variables from .env file
@@ -21,12 +22,21 @@ app.use(express.json()); // so backend can read JSON data from requests
 app.use(express.urlencoded({ extended: true }));
 
 //Routes
+app.use("/api/auth", authRoutes); // Use auth routes
 app.use("/api/employees", employeeRoutes); // Use employee routes
 app.use("/api/departments", departmentRoutes); // Use department routes
 
 // Test route
 app.get('/', (req, res) => {
   res.send('👌 Garment ERP backend is running!');
+});
+
+// 404 handler for undefined routes
+app.all('*', (req, res) => {
+  res.status(404).json({
+    success: false,
+    message: `Route ${req.originalUrl} not found`
+  });
 });
 
 // Global error handler (MUST be last middleware)
