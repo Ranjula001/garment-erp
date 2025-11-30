@@ -1,0 +1,107 @@
+// Garment ERP Database Schema
+// Based on current Sequelize models in the project
+
+Project garment_erp {
+  database_type: 'PostgreSQL'
+  Note: 'Garment ERP System Database Schema - Current Implementation'
+}
+
+// User Management & Authentication (Currently Implemented)
+Table Users {
+  id integer [primary key, increment]
+  username varchar(255) [not null, unique, note: 'Length 4-20 chars']
+  email varchar(255) [not null, unique, note: 'Valid email format']
+  password varchar(255) [not null, note: 'Hashed password, length 6-100 chars']
+  role enum('super-admin', 'admin', 'manager', 'employee') [not null, default: 'employee']
+  status enum('active', 'inactive') [not null, default: 'active']
+  createdAt timestamp [not null, default: `now()`]
+  updatedAt timestamp [not null, default: `now()`]
+}
+
+// Department Management (Currently Implemented)
+Table Departments {
+  id integer [primary key, increment]
+  name varchar(255) [not null, unique]
+  status varchar(255) [not null, default: 'active']
+  description text [null]
+  createdAt timestamp [not null, default: `now()`]
+  updatedAt timestamp [not null, default: `now()`]
+}
+
+// Employee Management (Currently Implemented)
+Table Employees {
+  id integer [primary key, increment]
+  firstName varchar(255) [not null]
+  lastName varchar(255) [not null]
+  email varchar(255) [not null, unique]
+  role varchar(255) [not null]
+  salary integer [not null]
+  status varchar(255) [not null, default: 'active']
+  departmentId integer [null, ref: > Departments.id]
+  createdAt timestamp [not null, default: `now()`]
+  updatedAt timestamp [not null, default: `now()`]
+}
+
+// Future Implementation Tables (Not yet implemented)
+/*
+Table customers {
+  id integer [primary key, increment]
+  customer_code varchar(20) [unique, not null]
+  company_name varchar(255) [not null]
+  contact_person varchar(255)
+  email varchar(255)
+  phone varchar(20)
+  address text
+  city varchar(100)
+  country varchar(100)
+  credit_limit decimal(12,2) [default: 0]
+  payment_terms integer [default: 30]
+  status enum('active', 'inactive') [default: 'active']
+  createdAt timestamp [not null, default: `now()`]
+  updatedAt timestamp [not null, default: `now()`]
+}
+
+Table suppliers {
+  id integer [primary key, increment]
+  supplier_code varchar(20) [unique, not null]
+  company_name varchar(255) [not null]
+  contact_person varchar(255)
+  email varchar(255)
+  phone varchar(20)
+  address text
+  city varchar(100)
+  country varchar(100)
+  payment_terms integer [default: 30]
+  rating integer
+  status enum('active', 'inactive') [default: 'active']
+  createdAt timestamp [not null, default: `now()`]
+  updatedAt timestamp [not null, default: `now()`]
+}
+
+Table products {
+  id integer [primary key, increment]
+  product_code varchar(50) [unique, not null]
+  name varchar(255) [not null]
+  description text
+  size varchar(20)
+  color varchar(50)
+  cost_price decimal(10,2)
+  selling_price decimal(10,2)
+  status enum('active', 'discontinued') [default: 'active']
+  createdAt timestamp [not null, default: `now()`]
+  updatedAt timestamp [not null, default: `now()`]
+}
+
+Table sales_orders {
+  id integer [primary key, increment]
+  order_number varchar(50) [unique, not null]
+  customer_id integer [ref: > customers.id]
+  order_date date [not null]
+  delivery_date date
+  status enum('draft', 'confirmed', 'shipped', 'delivered') [default: 'draft']
+  total_amount decimal(12,2)
+  created_by integer [ref: > Employees.id]
+  createdAt timestamp [not null, default: `now()`]
+  updatedAt timestamp [not null, default: `now()`]
+}
+*/

@@ -1,0 +1,114 @@
+// Garment ERP Database Diagram - Current Implementation
+// Copy this content to https://dbdiagram.io/d to visualize
+
+Project garment_erp {
+  database_type: 'PostgreSQL'
+  Note: '''
+    Garment ERP System - Current Implementation
+    Implemented: Users, Departments, Employees
+    Future: Products, Orders, Inventory, Finance
+  '''
+}
+
+// Currently Implemented Tables
+Table Users {
+  id integer [pk, increment]
+  username varchar(255) [unique, not null]
+  email varchar(255) [unique, not null]
+  password varchar(255) [not null]
+  role enum('super-admin', 'admin', 'manager', 'employee') [default: 'employee']
+  status enum('active', 'inactive') [default: 'active']
+  createdAt timestamp [default: `now()`]
+  updatedAt timestamp [default: `now()`]
+  
+  Note: 'User authentication and authorization'
+}
+
+Table Departments {
+  id integer [pk, increment]
+  name varchar(255) [unique, not null]
+  status varchar(255) [default: 'active']
+  description text
+  createdAt timestamp [default: `now()`]
+  updatedAt timestamp [default: `now()`]
+  
+  Note: 'Department management'
+}
+
+Table Employees {
+  id integer [pk, increment]
+  firstName varchar(255) [not null]
+  lastName varchar(255) [not null]
+  email varchar(255) [unique, not null]
+  role varchar(255) [not null]
+  salary integer [not null]
+  status varchar(255) [default: 'active']
+  departmentId integer
+  createdAt timestamp [default: `now()`]
+  updatedAt timestamp [default: `now()`]
+  
+  Note: 'Employee information and management'
+}
+
+// Current Relationships
+Ref: Employees.departmentId > Departments.id
+
+// Future Implementation (Uncomment when ready)
+/*
+Table customers {
+  id integer [pk, increment]
+  customer_code varchar(20) [unique, not null]
+  company_name varchar(255) [not null]
+  contact_person varchar(255)
+  email varchar(255)
+  phone varchar(20)
+  address text
+  status enum('active', 'inactive') [default: 'active']
+  createdAt timestamp [default: `now()`]
+  updatedAt timestamp [default: `now()`]
+}
+
+Table products {
+  id integer [pk, increment]
+  product_code varchar(50) [unique, not null]
+  name varchar(255) [not null]
+  description text
+  size varchar(20)
+  color varchar(50)
+  cost_price decimal(10,2)
+  selling_price decimal(10,2)
+  status enum('active', 'discontinued') [default: 'active']
+  createdAt timestamp [default: `now()`]
+  updatedAt timestamp [default: `now()`]
+}
+
+Table sales_orders {
+  id integer [pk, increment]
+  order_number varchar(50) [unique, not null]
+  customer_id integer
+  order_date date [not null]
+  delivery_date date
+  status enum('draft', 'confirmed', 'shipped', 'delivered') [default: 'draft']
+  total_amount decimal(12,2)
+  created_by integer
+  createdAt timestamp [default: `now()`]
+  updatedAt timestamp [default: `now()`]
+}
+
+Table order_items {
+  id integer [pk, increment]
+  order_id integer
+  product_id integer
+  quantity integer [not null]
+  unit_price decimal(10,2) [not null]
+  total_price decimal(12,2) [not null]
+  createdAt timestamp [default: `now()`]
+  updatedAt timestamp [default: `now()`]
+}
+
+// Future Relationships
+Ref: sales_orders.customer_id > customers.id
+Ref: sales_orders.created_by > Employees.id
+Ref: order_items.order_id > sales_orders.id
+Ref: order_items.product_id > products.id
+*/
